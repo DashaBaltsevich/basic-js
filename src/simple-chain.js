@@ -4,25 +4,52 @@ import { NotImplementedError } from '../extensions/index.js';
  * Implement chainMaker object according to task description
  * 
  */
-export default {
+export default { 
+  str: "",
   getLength() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    return this.str.length;
   },
-  addLink(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  addLink(value) {
+    if (arguments.length != 0) {
+      if (this.str.length === 0) {
+        this.str += `( ${value} )`;
+      } else {
+        this.str += `~~( ${value} )`;
+      }
+    } else {
+       if (this.str.length === 0) {
+        this.str += `( )`;
+      } else {
+        this.str += `~~( )`;
+      }
+    }
+    return this;
   },
-  removeLink(/* position */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  removeLink(position) {
+    function isInteger(num) {
+      return (num ^ 0) === num;
+    }
+    if (this.str.length != 0) {
+      let arr = this.str.split('~~');
+      if (typeof(position) === 'number' && isInteger(position) ===true && arr[position-1]) {
+           arr.splice(position-1, 1)
+           this.str = arr.join('~~'); 
+       } else {
+         // this.str = '';
+         throw new Error("You can\'t remove incorrect link!");
+        }
+    }
+    return this
   },
   reverseChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (this.str.length != 0) {
+      let arr = this.str.split('~~').reverse();
+      this.str = arr.join('~~');
+    }
+    return this
   },
   finishChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
+    return this.str;
+  },
+
 };

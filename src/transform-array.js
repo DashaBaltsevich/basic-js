@@ -13,7 +13,40 @@ import { NotImplementedError } from '../extensions/index.js';
  * transform([1, 2, 3, '--discard-prev', 4, 5]) => [1, 2, 4, 5]
  * 
  */
-export default function transform(/* arr */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+export default function transform(arr) {
+  let newarr = [];
+  if( Array.isArray(arr)) {
+    arr.forEach(e => {
+      newarr.push(e)
+    })
+  } else {throw new Error("'arr' parameter must be an instance of the Array!")}
+  
+function a (newarr) {
+      for (let i=0; i< newarr.length; i++) {
+    if (newarr[i] === '--double-next') {
+      if(newarr[i+1]) {
+        newarr[i] = newarr[i+1]
+      }
+    } else if (newarr[i] === '--double-prev') {
+      if (newarr[i-1]) {
+        newarr[i] = newarr[i-1]
+      }
+    } else if (newarr[i] === '--discard-next') {
+      if (newarr[i+1]) {
+        newarr.splice(i, 2)
+      }
+    } else if (newarr[i] === '--discard-prev') {
+      if (newarr[i-1]) {
+        newarr.splice(i-1, 2)
+      }
+    }
+   }
+  } 
+  a(newarr)
+  for (let i =0; i< newarr.length; i++) {
+    if (newarr[i] === '--discard-prev' ||newarr[i] === '--discard-next' || newarr[i] === '--double-prev' || newarr[i] === '--double-next' ) {
+      newarr.splice(i, 1)
+    }
+  }
+    return newarr;
 }
